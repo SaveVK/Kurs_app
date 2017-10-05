@@ -1,15 +1,42 @@
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
+
 <body>
-    hello word
+    <h1>SportTrainer</h1>
+    <input type="text" class="weight" style="width: 10%; min-width: 150px;">
+    <input type="text" class="height" style="width: 10%; min-width: 150px;">
+    <input class="button" type="submit" value="Відправити">
+    <div class="yourWeight"></div>
+    <div class="yourHeight"></div>
+    <div class="yourTrain"></div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        let socket = io("http://localhost:3000")
+        let socket = io("http://localhost:3000");
+        document.querySelector(".button").addEventListener("click", ev => {
+            ev.preventDefault();
+            let weightData = document.querySelector(".weight").value;
+            let heightData = document.querySelector(".height").value;
+            //console.log(weightData);
+            socket.emit("getWeight", weightData);
+            socket.emit("getHeight", heightData);
+            socket.emit("getTrain");
+            
+        });
+        socket.on("getTrain", function (data) {
+            let yourTrain = document.querySelector(".yourTrain");
+            yourTrain.innerHTML = data;
+            //console.log(data);
+        })
     </script>
 </body>
+
 </html>
