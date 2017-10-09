@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+    <title>SportTrainer</title>
 </head>
 
 <body>
@@ -25,7 +25,6 @@
             ev.preventDefault();
             let weightData = document.querySelector(".weight").value;
             let heightData = document.querySelector(".height").value;
-            //console.log(weightData);
             socket.emit("getWeight", weightData);
             socket.emit("getHeight", heightData);
             socket.emit("getTrain");
@@ -34,7 +33,6 @@
         socket.on("getTrain", function (data) {
             let yourTrain = document.querySelector(".yourTrain");
             yourTrain.innerHTML = data;
-            //console.log(data);
         })
     </script>
 </body>
