@@ -4,6 +4,7 @@
   "description": "for kurs work",
   "main": "index.js",
   "dependencies": {
+    "ejs": "^2.5.7",
     "express": "^4.16.1",
     "socket.io": "^2.0.3"
   },
