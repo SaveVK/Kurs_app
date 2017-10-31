@@ -44,13 +44,6 @@ const connection = mysql.createConnection({
 });
 connection.connect();
 
-
-app.get("/", function (req, res) {
-    res.render("index", {
-        title: "SportTrainer"
-    });
-});
-
 app.get("/result", function (req, res) {
     res.render("result", {
         title: "Результати",
