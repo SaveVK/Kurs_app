@@ -1,0 +1,128 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+	<title>Node Authentication</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<style>
+		body 		{ padding-top:80px; word-wrap:break-word; }
+	</style>
+</head>
+<body>
+<div class="container">
+
+	<div class="page-header text-center">
+		<h1><span class="fa fa-anchor"></span> Profile Page</h1>
+		<a href="/logout" class="btn btn-default btn-sm">Logout</a>
+	</div>
+
+	<div class="row">
+
+		<!-- LOCAL INFORMATION -->
+		<div class="col-sm-6">
+			<div class="well">
+				<h3><span class="fa fa-user"></span> Local</h3>
+
+					<p>
+						<strong>id</strong>: <%= user.id %><br>
+						<strong>username</strong>: <div class="username"><%= user.username %></div><br>
+						<strong>password</strong>: <%= user.password %>
+					</p>
+					<p>
+						<div>
+							<select class="browser-default sex">
+								<option value="" disabled selected>Виберіть стать</option>
+								<option value="man">Чоловіча</option>
+								<option value="woman">Жіноча</option>
+							</select>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<input value="" id="first_name2" type="text" class="validate age">
+								<label class="active" for="first_name2">Вік</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<input value="" id="first_name2" type="text" class="validate weight">
+								<label class="active" for="first_name2">Вага</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<input value="" id="first_name2" type="text" class="validate height">
+								<label class="active" for="first_name2">Ріст</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<input value="" id="first_name2" type="text" class="validate count">
+								<label class="active" for="first_name2">Кількість тренувань за тиждень</label>
+							</div>
+						</div>
+						<select class="browser-default level">
+							<option value="" disabled selected>Рівень тренувань</option>
+							<option value="newcomer">Новачок</option>
+							<option value="haveExperience">Є досвід</option>
+						</select>
+						<div>
+							<select class="browser-default wrapCircumference">
+								<option value="" disabled selected>Обхват зап'ястя</option>
+								<option value="16">від 16</option>
+								<option value="1618">16 - 18</option>
+								<option value="18">від 18</option>
+							</select>
+						</div>
+						<div>
+							<select class="browser-default goal">
+								<option value="" disabled selected>Яка мета тренувань</option>
+								<option value="loseWeight">Схуднути</option>
+								<option value="gainWeight">Набрати масу</option>
+							</select>
+						</div>
+						<a class="waves-effect waves-light btn-large button" href="/result">Відправити</a>
+						<div class="yourTrain"></div>
+					</p>
+
+			</div>
+		</div>
+
+	</div>
+
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+	let socket = io("http://localhost:3000");
+	document.querySelector(".button").addEventListener("click", ev => {
+		ev.preventDefault();
+		let usernameData = document.querySelector(".username").value;		
+		let weightData = document.querySelector(".weight").value;
+		let heightData = document.querySelector(".height").value;
+		let sexData = document.querySelector(".sex").value;
+		let ageData = document.querySelector(".age").value;
+		let countData = document.querySelector(".count").value;
+		let levelData = document.querySelector(".level").value;
+		let wrapCircumferenceData = document.querySelector(".wrapCircumference").value;
+		let goalData = document.querySelector(".goal").value;
+		socket.emit("getUsername", usernameData);
+		socket.emit("getWeight", weightData);
+		socket.emit("getHeight", heightData);
+		socket.emit("getSex", sexData);
+		socket.emit("getAge", ageData);
+		socket.emit("getCount", countData);
+		socket.emit("getLevel", levelData);
+		socket.emit("getWrapCircumference", wrapCircumferenceData);
+		socket.emit("getGoal", goalData);
+		socket.emit("getTrain");
+	});
+	socket.on("getTrain", function (data) {
+		let yourTrain = document.querySelector(".yourTrain");
+		yourTrain.innerHTML = data;
+		//location.href = "/result";
+	});
+	socket.emit("getInfo");
+	
+</script>
+</body>
+</html>
