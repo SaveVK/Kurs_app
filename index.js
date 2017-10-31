@@ -63,14 +63,14 @@ http.listen(3000, function () {
 
 });
 
-let username;
+let userID;
 let sex, age, weight, height, count, level, wrapCircumference, goal, trainingdescription, training_id;
 
 io.on("connection", function (socket) {
     console.log("connect");
 
-    socket.on("getUsername", function (data) {
-        username = data;
+    socket.on("getUserID", function (data) {
+        userID = data;
     });
 
     socket.on("getWeight", function (data) {
@@ -106,7 +106,7 @@ io.on("connection", function (socket) {
             trainingdescription = result[0].trainingdescription;
         });
         // training_id + username replace
-        let sql = "UPDATE users SET weight = '" + weight + "', height = '" + height + "', sex = '" + sex + "', age = " + age + ", count = " + count + ", level = '" + level + "', wrapCircumference = '" + wrapCircumference + "', goal = '" + goal + "', training_id = " + 1 + " WHERE id = " + 1;
+        let sql = "UPDATE users SET weight = '" + weight + "', height = '" + height + "', sex = '" + sex + "', age = " + age + ", count = " + count + ", level = '" + level + "', wrapCircumference = '" + wrapCircumference + "', goal = '" + goal + "', training_id = " + 1 + " WHERE id = " + userID;
         connection.query(sql, function (err, result) {
             if (err) throw err;
             console.log("1 record inserted");
@@ -114,7 +114,7 @@ io.on("connection", function (socket) {
           console.log(sql);
     });
     socket.on("getInfo", function () {
-        connection.query("SELECT * FROM users WHERE id = " + 1, function (error, result, fields) {
+        connection.query("SELECT * FROM users WHERE id = " + userID, function (error, result, fields) {
             if (error) throw error;
             io.emit("getTrain", "Твоя вага: " + result[0].weight + "<br>Твій ріст: " + result[0].height + "<br>Стать: " + result[0].sex + "<br>Вік: " + result[0].age + "<br>Кількість тренувань: " + result[0].count + "<br>Рівень тренувань: " + result[0].level + "<br>Обхват зап'ястя: " + result[0].wrapCircumference + "<br>Ціль: " + result[0].goal + "<br>Тренування для тебе: " + result[0].trainingdescription);
         });
