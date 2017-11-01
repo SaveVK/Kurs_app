@@ -1,0 +1,76 @@
+<!-- views/addMetrics.ejs -->
+<!doctype html>
+<html>
+
+<head>
+    <title>SportTrainer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../font-awesome.min.css">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper indigo">
+            <a href="/" class="brand-logo">SportTrainer</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li>
+                    <a href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="page">
+        <div class="pageInfo">
+            <a href="/statistic">go back</a>
+            <div class="container">
+                <div class="row">
+                    <div class="input-field col s3">
+                        <input value="" id="day" type="text" class="validate day">
+                        <label class="active" for="day">Day</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input value="" id="mount" type="text" class="validate mount">
+                        <label class="active" for="mount">Mounth</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input value="" id="year" type="text" class="validate year">
+                        <label class="active" for="year">Year</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input value="" id="weight" type="text" class="validate weight">
+                        <label class="active" for="weight">Weight</label>
+                    </div>
+                    <a class="waves-effect waves-light btn-large button indigo darken-1" href="#" onclick="setMetrics()">Add result</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket = io("http://localhost:3000");
+        let date, day, mount, year, weight;
+
+        function setMetrics() {
+            weight = document.querySelector(".weight").value;
+            year = document.querySelector(".year").value;
+            mount = document.querySelector(".mount").value;
+            day = document.querySelector(".day").value;
+            date = year + "-" + mount + "-" + day;
+            let data = {
+                date: date,
+                weight: weight
+            };
+            // console.log(data);
+            socket.emit("setMetrics", data);
+            document.querySelector(".weight").value = "";
+            document.querySelector(".year").value = "";
+            document.querySelector(".mount").value = "";
+            document.querySelector(".day").value = "";
+        };
+    </script>
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-<!-- views/index.ejs -->
+<!-- views/statistic.ejs -->
 <!doctype html>
 <html>
 
@@ -6,7 +6,6 @@
     <title>SportTrainer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-    <script src="jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../font-awesome.min.css">
 </head>
@@ -15,14 +14,21 @@
     <nav>
         <div class="nav-wrapper indigo">
             <a href="/" class="brand-logo">SportTrainer</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li>
+                    <a href="/logout">Logout</a>
+                </li>
+            </ul>
         </div>
     </nav>
     <div class="page">
         <div class="pageInfo">
-            <p>
-                <a href="/addMetrics">Add my metrics</a>
-            </p>
-            <canvas id="myChart" width="400" height="400"></canvas>
+            <div>
+                <canvas id="myChart" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <a href="/addMetrics">Add metrics</a>
+            </div>
         </div>
     </div>
 
@@ -35,15 +41,15 @@
         socket.emit("getStats");
         socket.on("sendStats", function (data) {
             //console.log(data.length);
-            for(let i = 0; i < data.length; i++){
+            for (let i = 0; i < data.length; i++) {
                 weight.push(data[i].weight);
                 date.push(data[i].date);
             }
-            // console.log(weight);
-            // console.log(date);
+            console.log(weight);
+            console.log(date);
         });
-        var ctx = document.getElementById("myChart");
-        var myChart = new Chart(ctx, {
+        let ctx = document.getElementById("myChart");
+        let myChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: date,

@@ -104,7 +104,8 @@ io.on("connection", function (socket) {
             io.emit("getTrainID", result);
         });
     });
-    function setInfoContinion(){
+
+    function setInfoContinion() {
         let sql = "UPDATE users SET weight = '" + weight + "', height = '" + height + "', sex = '" + sex + "', age = " + age + ", level = '" + level + "', goal = '" + goal + "', training_id = " + training_id + " WHERE id = " + userID;
         connection.query(sql, function (err, result) {
             if (err) throw err;
@@ -124,6 +125,14 @@ io.on("connection", function (socket) {
         connection.query(sql, function (err, result) {
             if (err) throw err;
             io.emit("sendStats", result);
+        });
+    });
+    socket.on("setMetrics", function (data) {
+        // console.log(data);
+        let sql = "INSERT INTO progress (id_user, weight, date) VALUES (" + userID + ", " + data.weight + ", '" + data.date + "')";
+        connection.query(sql, function (err, result) {
+            if (err) throw err;
+            console.log("1 record inserted");
         });
     });
 });
