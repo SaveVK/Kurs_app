@@ -117,7 +117,53 @@ io.on("connection", function (socket) {
         let sql = "SELECT users.id, users.username, users.weight, users.height, users.sex, users.age, users.level, users.goal, training.trainingdescription FROM users INNER JOIN training ON users.training_id = training.id WHERE users.id = " + userID;
         connection.query(sql, function (error, result, fields) {
             if (error) throw error;
-            io.emit("getTrain", "Твоя вага: " + result[0].weight + "<br>Твій ріст: " + result[0].height + "<br>Стать: " + result[0].sex + "<br>Вік: " + result[0].age + "<br>Рівень тренувань: " + result[0].level + "<br>Ціль: " + result[0].goal + "<br>Тренування для тебе: " + result[0].trainingdescription);
+
+            switch (result[0].sex) {
+                case "man":
+                    {
+                        sex = "Чоловік";
+                        break;
+                    }
+                case "woman":
+                    {
+                        sex = "Жінка";
+                        break;
+                    }
+                default:
+                    break;
+            };
+
+            switch (result[0].level) {
+                case "newcomer":
+                    {
+                        level = "Новачок";
+                        break;
+                    }
+                case "haveExperience":
+                    {
+                        level = "Є досвід";
+                        break;
+                    }
+                default:
+                    break;
+            };
+
+            switch (result[0].goal) {
+                case "loseWeight":
+                    {
+                        goal = "Схуднути";
+                        break;
+                    }
+                case "gainWeight":
+                    {
+                        goal = "Набрати масу";
+                        break;
+                    }
+                default:
+                    break;
+            }
+
+            io.emit("getTrain", "Твоя вага: " + result[0].weight + " кг." + "<br>Твій ріст: " + result[0].height + " см." + "<br>Стать: " + sex + "<br>Вік: " + result[0].age + " років" + "<br>Рівень тренувань: " + level + "<br>Ціль: " + goal + "<br>Тренування для тебе: " + result[0].trainingdescription);
         });
     });
     socket.on("getStats", function (data) {
