@@ -27,6 +27,7 @@
             <center>
                 <h5>Edit info</h5>
             </center>
+            <div id="userID" style="display: none;"><%= user.id %></div>
             <br>
 
             <div class="row">
@@ -43,10 +44,6 @@
                 <div class="input-field col s6">
                     <input value="" id="first_name2" type="text" class="validate height">
                     <label class="active" for="first_name2">Ріст</label>
-                </div>
-                <div class="input-field col s6">
-                    <input value="" id="first_name2" type="text" class="validate count">
-                    <label class="active" for="first_name2">Кількість тренувань за тиждень</label>
                 </div>
             </div>
             <div class="row">
@@ -67,14 +64,6 @@
             </div>
             <div class="row">
                 <div class="col s6">
-                    <select class="browser-default wrapCircumference">
-                        <option value="" disabled selected>Обхват зап'ястя</option>
-                        <option value="16">від 16</option>
-                        <option value="1618">16 - 18</option>
-                        <option value="18">від 18</option>
-                    </select>
-                </div>
-                <div class="col s6">
                     <select class="browser-default goal">
                         <option value="" disabled selected>Яка мета тренувань</option>
                         <option value="loseWeight">Схуднути</option>
@@ -86,9 +75,16 @@
             <a class="waves-effect waves-light btn-large button indigo darken-1" href="/profile">Відправити</a>
         </div>
     </div>
+    <div class="trainID" style="display: none;"></div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         let socket = io("http://localhost:3000");
+
+		let userIDDataDoc = document.getElementById("userID");
+		let userIDData = userIDDataDoc.textContent || userIDDataDoc.innerText;
+        socket.emit("getUserID", userIDData);
+        
+        alert(userIDData);
 
         document.querySelector(".button").addEventListener("click", ev => {
             ev.preventDefault();
@@ -96,21 +92,23 @@
             let heightData = document.querySelector(".height").value;
             let sexData = document.querySelector(".sex").value;
             let ageData = document.querySelector(".age").value;
-            let countData = document.querySelector(".count").value;
             let levelData = document.querySelector(".level").value;
-            let wrapCircumferenceData = document.querySelector(".wrapCircumference").value;
             let goalData = document.querySelector(".goal").value;
             socket.emit("getWeight", weightData);
             socket.emit("getHeight", heightData);
             socket.emit("getSex", sexData);
             socket.emit("getAge", ageData);
-            socket.emit("getCount", countData);
             socket.emit("getLevel", levelData);
-            socket.emit("getWrapCircumference", wrapCircumferenceData);
-            socket.emit("getGoal", goalData);
+            socket.emit("getGoal", goalData);       
             socket.emit("setInfo");
             document.location.href = "http://localhost:3000/profile";
         });
+
+        socket.on("getTrainID", function (data) {
+			let trainID = document.querySelector(".trainID");
+            trainID.innerHTML = data;
+            socket.emit("setTrainID", data);
+		});
     </script>
 </body>
 

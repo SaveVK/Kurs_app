@@ -4,25 +4,25 @@ const http = require("http").Server(app);
 const io = require("socket.io")(http);
 const mysql = require('mysql');
 
-var session  = require('express-session');
+var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-var flash    = require('connect-flash');
+var flash = require('connect-flash');
 
 require('./config/passport')(passport); // pass passport for configuration
 
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.urlencoded({
-	extended: true
+    extended: true
 }));
 app.use(bodyParser.json());
 
 app.use(session({
-	secret: 'vidyapathaisalwaysrunning',
-	resave: true,
-	saveUninitialized: true
- } )); // session secret
+    secret: 'vidyapathaisalwaysrunning',
+    resave: true,
+    saveUninitialized: true
+})); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
@@ -64,7 +64,7 @@ http.listen(3000, function () {
 });
 
 let userID;
-let sex, age, weight, height, count, level, wrapCircumference, goal, trainingdescription, training_id;
+let sex, age, weight, height, level, goal, trainingdescription, training_id;
 
 io.on("connection", function (socket) {
     console.log("connect");
@@ -85,31 +85,38 @@ io.on("connection", function (socket) {
     socket.on("getAge", function (data) {
         age = data;
     });
-    socket.on("getCount", function (data) {
-        count = data;
-    });
     socket.on("getLevel", function (data) {
         level = data;
-    });
-    socket.on("getWrapCircumference", function (data) {
-        wrapCircumference = data;
     });
     socket.on("getGoal", function (data) {
         goal = data;
     });
+    socket.on("setTrainID", function (data) {
+        training_id = data[0].id;
+        setInfoContinion();
+    });
     socket.on("setInfo", function () {
         // training_id + username replace
-        let sql = "UPDATE users SET weight = '" + weight + "', height = '" + height + "', sex = '" + sex + "', age = " + age + ", count = " + count + ", level = '" + level + "', wrapCircumference = '" + wrapCircumference + "', goal = '" + goal + "', training_id = " + 1 + " WHERE id = " + userID;
+        let sqlGetTraining = "SELECT training.id FROM training WHERE weight = " + weight + " AND height = " + height + " AND sex = '" + sex + "' AND age = " + age + " AND level = '" + level + "' AND goal = '" + goal + "'";
+
+        connection.query(sqlGetTraining, function (err, result) {
+            if (err) throw err;
+            io.emit("getTrainID", result);
+        });
+    });
+    function setInfoContinion(){
+        let sql = "UPDATE users SET weight = '" + weight + "', height = '" + height + "', sex = '" + sex + "', age = " + age + ", level = '" + level + "', goal = '" + goal + "', training_id = " + training_id + " WHERE id = " + userID;
         connection.query(sql, function (err, result) {
             if (err) throw err;
             console.log("1 record inserted");
-          });
-          console.log(sql);
-    });
+        });
+        console.log(sql);
+    }
     socket.on("getInfo", function () {
-        connection.query("SELECT * FROM users WHERE id = " + userID, function (error, result, fields) {
+        let sql = "SELECT users.id, users.username, users.weight, users.height, users.sex, users.age, users.level, users.goal, training.trainingdescription FROM users INNER JOIN training ON users.training_id = training.id WHERE users.id = " + userID;
+        connection.query(sql, function (error, result, fields) {
             if (error) throw error;
-            io.emit("getTrain", "Твоя вага: " + result[0].weight + "<br>Твій ріст: " + result[0].height + "<br>Стать: " + result[0].sex + "<br>Вік: " + result[0].age + "<br>Кількість тренувань: " + result[0].count + "<br>Рівень тренувань: " + result[0].level + "<br>Обхват зап'ястя: " + result[0].wrapCircumference + "<br>Ціль: " + result[0].goal + "<br>Тренування для тебе: " + result[0].trainingdescription);
+            io.emit("getTrain", "Твоя вага: " + result[0].weight + "<br>Твій ріст: " + result[0].height + "<br>Стать: " + result[0].sex + "<br>Вік: " + result[0].age + "<br>Рівень тренувань: " + result[0].level + "<br>Ціль: " + result[0].goal + "<br>Тренування для тебе: " + result[0].trainingdescription);
         });
     });
 });
