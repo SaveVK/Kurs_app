@@ -13,3 +13,41 @@
     padding: 0;
     color: red;
 }
+
+body{
+    background: rgb(231, 235, 240);
+}
+
+.login_page{
+    background: white;
+    padding: 30px 60px;
+    border-radius: 2px;
+    margin: 25px auto 0px;
+    max-width: 500px;
+}
+
+.brand-logo{
+    margin-left: 15px;
+}
+
+.loginButtons{
+    margin: 0px auto 0px;
+    max-width: 280px;
+}
+
+#loginBtn{
+    width: 100%;
+}
+
+.page{
+    background: white;
+    padding: 30px 60px;
+    border-radius: 2px;
+    margin: 25px auto 0px;
+    max-width: 60%;
+}
+
+.pageInfo{
+    margin: 0px auto 0px;
+    max-width: 100%;
+}

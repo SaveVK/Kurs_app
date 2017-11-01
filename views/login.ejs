@@ -1,48 +1,62 @@
 <!-- views/login.ejs -->
 <!doctype html>
 <html>
+
 <head>
-	<title>Node Authentication</title>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <title>SportTrainer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="../style.css">
-	<style>
-		body 		{ padding-top:80px; }
-	</style>
+    <link rel="stylesheet" href="../font-awesome.min.css">
 </head>
+
 <body>
-    <div class="container">
-        <div class="col-sm-6 col-sm-offset-3">
-            <h1><span class="fa fa-sign-in"></span> Login</h1>
+    <nav>
+        <div class="nav-wrapper indigo">
+            <a href="/" class="brand-logo">SportTrainer</a>
+        </div>
+    </nav>
+    <div class="login_page">
+        <div class="loginButtons">
+            <center><h5>Login</h5></center>
 
             <!-- show any messages that come back with authentication -->
             <% if (message.length > 0) { %>
-                <div class="alert alert-danger"><%= message %></div>
-            <% } %>
-
-            <!-- LOGIN FORM -->
-            <form action="/login" method="post">
-                <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" class="form-control" name="username">
+                <div class="alert alert-danger">
+                    <%= message %>
                 </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" class="form-control" name="password">
-                </div>
-                <div class="form-group">
-                    <label>Remember Me</label>
-                    <input type="checkbox" class="form-control" name="remember" value="yes">
-                </div>
+                <% } %>
 
-                <button type="submit" class="btn btn-warning btn-lg">Login</button>
-            </form>
+                    <!-- LOGIN FORM -->
+                    <form action="/login" method="post">
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" class="form-control" name="username">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" class="filled-in" id="filled-in-box" name="remember" checked="checked" value="yes">
+                            <label for="filled-in-box">Remember Me</label>
+                        </div>
+                        <br>
+                        <button type="submit" id="loginBtn" class="btn btn-warning btn-lg indigo darken-1">Login
+                        </button>
+                    </form>
 
-            <hr>
-
-            <p>Need an account? <a href="/signup">Signup</a></p>
-            <p>Or go <a href="/">home</a>.</p>
+                    <hr>
+                    <center>
+                        <p>Need an account?
+                            <a href="/signup">Signup</a>
+                        </p>
+                        <p>Or go
+                            <a href="/">home</a>.</p>
+                    </center>
         </div>
     </div>
 </body>
+
 </html>

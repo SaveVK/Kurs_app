@@ -97,14 +97,7 @@ io.on("connection", function (socket) {
     socket.on("getGoal", function (data) {
         goal = data;
     });
-    socket.on("getTrain", function () {
-        connection.query("SELECT * FROM training WHERE weight = " + weight + " AND height = " + height, function (error, result, fields) {
-            if (error) throw error;
-            io.emit("getTrain", "Твоя вага: " + result[0].weight + "<br>Твій ріст: " + result[0].height + "<br>Стать: " + sex + "<br>Вік: " + age + "<br>Кількість тренувань: " + count + "<br>Рівень тренувань: " + level + "<br>Обхват зап'ястя: " + wrapCircumference + "<br>Ціль: " + goal + "<br>Тренування для тебе: " + result[0].trainingdescription);
-            weight = result[0].weight;
-            height = result[0].height;
-            trainingdescription = result[0].trainingdescription;
-        });
+    socket.on("setInfo", function () {
         // training_id + username replace
         let sql = "UPDATE users SET weight = '" + weight + "', height = '" + height + "', sex = '" + sex + "', age = " + age + ", count = " + count + ", level = '" + level + "', wrapCircumference = '" + wrapCircumference + "', goal = '" + goal + "', training_id = " + 1 + " WHERE id = " + userID;
         connection.query(sql, function (err, result) {

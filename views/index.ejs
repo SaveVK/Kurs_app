@@ -1,25 +1,32 @@
 <!-- views/index.ejs -->
 <!doctype html>
 <html>
+
 <head>
-	<title>Node Authentication</title>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <title>SportTrainer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="../style.css">
-    <style>
-		body 		{ padding-top:80px; }
-	</style>
+    <link rel="stylesheet" href="../font-awesome.min.css">
 </head>
+
 <body>
-    <div class="container">
-        <div class="jumbotron text-center">
-            <h1><span class="fa fa-lock"></span> Node Authentication</h1>
-
-            <p>Login or Register with:</p>
-
-            <a href="/login" class="btn btn-default"><span class="fa fa-user"></span> Local Login</a>
-            <a href="/signup" class="btn btn-default"><span class="fa fa-user"></span> Local Signup</a>
+    <nav>
+        <div class="nav-wrapper indigo">
+            <a href="/" class="brand-logo">SportTrainer</a>
+        </div>
+    </nav>
+    <div class="login_page">
+        <div class="loginButtons">
+            <center><p>Login or Register with:</p></center>
+            <a href="/login" class="btn btn-default indigo darken-1">
+                <span class="fa fa-user"></span> Login</a>
+            or
+            <a href="/signup" class="btn btn-default indigo darken-3">
+                <span class="fa fa-user-plus"></span> Signup</a>
         </div>
     </div>
 </body>
+
 </html>

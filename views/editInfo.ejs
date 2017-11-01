@@ -1,0 +1,117 @@
+<!-- views/editInfo.ejs -->
+<!doctype html>
+<html>
+
+<head>
+    <title>SportTrainer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../font-awesome.min.css">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper indigo">
+            <a href="/" class="brand-logo">SportTrainer</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li>
+                    <a href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="page">
+        <div class="pageInfo">
+            <center>
+                <h5>Edit info</h5>
+            </center>
+            <br>
+
+            <div class="row">
+                <div class="input-field col s6">
+                    <input value="" id="first_name2" type="text" class="validate age">
+                    <label class="active" for="first_name2">Вік</label>
+                </div>
+                <div class="input-field col s6">
+                    <input value="" id="first_name2" type="text" class="validate weight">
+                    <label class="active" for="first_name2">Вага</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input value="" id="first_name2" type="text" class="validate height">
+                    <label class="active" for="first_name2">Ріст</label>
+                </div>
+                <div class="input-field col s6">
+                    <input value="" id="first_name2" type="text" class="validate count">
+                    <label class="active" for="first_name2">Кількість тренувань за тиждень</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    <select class="browser-default sex">
+                        <option value="" disabled selected>Виберіть стать</option>
+                        <option value="man">Чоловіча</option>
+                        <option value="woman">Жіноча</option>
+                    </select>
+                </div>
+                <div class="col s6">
+                    <select class="browser-default level">
+                        <option value="" disabled selected>Рівень тренувань</option>
+                        <option value="newcomer">Новачок</option>
+                        <option value="haveExperience">Є досвід</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    <select class="browser-default wrapCircumference">
+                        <option value="" disabled selected>Обхват зап'ястя</option>
+                        <option value="16">від 16</option>
+                        <option value="1618">16 - 18</option>
+                        <option value="18">від 18</option>
+                    </select>
+                </div>
+                <div class="col s6">
+                    <select class="browser-default goal">
+                        <option value="" disabled selected>Яка мета тренувань</option>
+                        <option value="loseWeight">Схуднути</option>
+                        <option value="gainWeight">Набрати масу</option>
+                    </select>
+                </div>
+            </div>
+
+            <a class="waves-effect waves-light btn-large button indigo darken-1" href="/profile">Відправити</a>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket = io("http://localhost:3000");
+
+        document.querySelector(".button").addEventListener("click", ev => {
+            ev.preventDefault();
+            let weightData = document.querySelector(".weight").value;
+            let heightData = document.querySelector(".height").value;
+            let sexData = document.querySelector(".sex").value;
+            let ageData = document.querySelector(".age").value;
+            let countData = document.querySelector(".count").value;
+            let levelData = document.querySelector(".level").value;
+            let wrapCircumferenceData = document.querySelector(".wrapCircumference").value;
+            let goalData = document.querySelector(".goal").value;
+            socket.emit("getWeight", weightData);
+            socket.emit("getHeight", heightData);
+            socket.emit("getSex", sexData);
+            socket.emit("getAge", ageData);
+            socket.emit("getCount", countData);
+            socket.emit("getLevel", levelData);
+            socket.emit("getWrapCircumference", wrapCircumferenceData);
+            socket.emit("getGoal", goalData);
+            socket.emit("setInfo");
+            document.location.href = "http://localhost:3000/profile";
+        });
+    </script>
+</body>
+
+</html>
