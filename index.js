@@ -119,4 +119,11 @@ io.on("connection", function (socket) {
             io.emit("getTrain", "Твоя вага: " + result[0].weight + "<br>Твій ріст: " + result[0].height + "<br>Стать: " + result[0].sex + "<br>Вік: " + result[0].age + "<br>Рівень тренувань: " + result[0].level + "<br>Ціль: " + result[0].goal + "<br>Тренування для тебе: " + result[0].trainingdescription);
         });
     });
+    socket.on("getStats", function (data) {
+        let sql = "SELECT * FROM progress WHERE progress.id_user = " + userID;
+        connection.query(sql, function (err, result) {
+            if (err) throw err;
+            io.emit("sendStats", result);
+        });
+    });
 });

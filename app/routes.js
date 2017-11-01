@@ -71,6 +71,12 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	app.get('/statistic', isLoggedIn, function(req, res) {
+		res.render('statistic.ejs', {
+			user : req.user // get the user out of session and pass to template
+		});
+	});
+
 	// =====================================
 	// LOGOUT ==============================
 	// =====================================

@@ -1,0 +1,75 @@
+<!-- views/index.ejs -->
+<!doctype html>
+<html>
+
+<head>
+    <title>SportTrainer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../font-awesome.min.css">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper indigo">
+            <a href="/" class="brand-logo">SportTrainer</a>
+        </div>
+    </nav>
+    <div class="page">
+        <div class="pageInfo">
+            <p>
+                <a href="/addMetrics">Add my metrics</a>
+            </p>
+            <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+    </div>
+
+    <script src="app/Chart.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket = io("http://localhost:3000");
+        let weight = [];
+        let date = [];
+        socket.emit("getStats");
+        socket.on("sendStats", function (data) {
+            //console.log(data.length);
+            for(let i = 0; i < data.length; i++){
+                weight.push(data[i].weight);
+                date.push(data[i].date);
+            }
+            // console.log(weight);
+            // console.log(date);
+        });
+        var ctx = document.getElementById("myChart");
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: date,
+                datasets: [{
+                    label: 'Вага',
+                    data: weight,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
