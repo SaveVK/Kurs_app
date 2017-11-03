@@ -13,7 +13,7 @@
 <body>
     <nav>
         <div class="nav-wrapper indigo">
-            <a href="/" class="brand-logo">SportTrainer</a>
+            <a href="/profile" class="brand-logo">SportTrainer</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li>
                     <a href="/logout">Logout</a>
@@ -42,39 +42,44 @@
         socket.on("sendStats", function (data) {
             //console.log(data.length);
             for (let i = 0; i < data.length; i++) {
+                let dateForSplit = data[i].date;
+                let dateToArray = dateForSplit.split('T');
                 weight.push(data[i].weight);
-                date.push(data[i].date);
+                date.push(dateToArray[0]);
             }
-            console.log(weight);
-            console.log(date);
+            // console.log(weight);
+            // console.log(date);
         });
         let ctx = document.getElementById("myChart");
         let myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: date,
-                datasets: [{
-                    label: 'Вага',
-                    data: weight,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
+                    type: 'line',
+                    data: {
+                        labels: date,
+                        datasets: [{
+                            label: 'Вага',
+                            data: weight,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        },
+                            legend: {
+                                position: "bottom"
+                            }
                         }
-                    }]
-                }
-            }
-        });
+                    });
     </script>
 </body>
 
