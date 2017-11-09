@@ -51,3 +51,17 @@ body{
     margin: 0px auto 0px;
     max-width: 100%;
 }
+
+.canvasBloc{
+    border: 1px solid #bbdefb  ;
+    margin-bottom: 20px;
+}
+
+.canvasBlocText{
+    padding: 0 0 0 30px;
+    color: #039be5   ;
+}
+
+.backButton{
+    padding-bottom: 20px;
+}

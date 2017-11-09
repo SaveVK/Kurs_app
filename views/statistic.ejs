@@ -23,11 +23,23 @@
     </nav>
     <div class="page">
         <div class="pageInfo">
-            <div>
-                <canvas id="myChart" width="400" height="400"></canvas>
+            <div class="backButton">
+                <a href="/profile">
+                    <i class="fa fa-angle-left" aria-hidden="true"></i> назад</a>
+            <a style="float: right;" href="/addMetrics">Додати результати</a>
+            
             </div>
-            <div>
-                <a href="/addMetrics">Додати результати</a>
+            <div class="canvasBloc">
+                <div class="canvasBlocText">
+                    <h5>Вага</h5>
+                </div>
+                <canvas id="chartWeight"></canvas>
+            </div>
+            <div class="canvasBloc">
+                <div class="canvasBlocText">
+                    <h5>Об'єм грудей, талії, бедер</h5>
+                </div>
+                <canvas id="chartVolume"></canvas>
             </div>
         </div>
     </div>
@@ -36,28 +48,75 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
         let socket = io("http://localhost:3000");
-        let weight = [];
-        let date = [];
+        let weight = [],
+            breast = [],
+            waist = [],
+            hips = [];
+        let dateWeight = [],
+            dateVolume = [];
         socket.emit("getStats");
-        socket.on("sendStats", function (data) {
+        socket.on("sendStatsWeight", function (data) {
             //console.log(data.length);
             for (let i = 0; i < data.length; i++) {
                 let dateForSplit = data[i].date;
                 let dateToArray = dateForSplit.split('T');
                 weight.push(data[i].weight);
-                date.push(dateToArray[0]);
+                dateWeight.push(dateToArray[0]);
             }
             // console.log(weight);
             // console.log(date);
+            let ctxWeight = document.getElementById("chartWeight");
+            let chartWeight = new Chart(ctxWeight, {
+                type: 'line',
+                data: {
+                    labels: dateWeight,
+                    datasets: [{
+                        label: 'Вага',
+                        data: weight,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    legend: {
+                        position: "bottom"
+                    }
+                }
+            });
         });
-        let ctx = document.getElementById("myChart");
-        let myChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: date,
-                        datasets: [{
-                            label: 'Вага',
-                            data: weight,
+        socket.on("sendStatsVolume", function (data) {
+            //console.log(data);
+            for (let i = 0; i < data.length; i++) {
+                let dateForSplit = data[i].date;
+                let dateToArray = dateForSplit.split('T');
+                breast.push(data[i].breastV);
+                waist.push(data[i].waistV);
+                hips.push(data[i].hipsV);
+                dateVolume.push(dateToArray[0]);
+            }
+            //console.log(breast);
+            // console.log(weight);
+            // console.log(date);
+            let ctxVolume = document.getElementById("chartVolume");
+            let chartVolume = new Chart(ctxVolume, {
+                type: 'line',
+                data: {
+                    labels: dateVolume,
+                    datasets: [{
+                            label: "Об'єм грудей",
+                            data: breast,
                             backgroundColor: [
                                 'rgba(255, 99, 132, 0.2)'
                             ],
@@ -65,21 +124,45 @@
                                 'rgba(255,99,132,1)'
                             ],
                             borderWidth: 1
+                        },
+                        {
+                            label: "Об'єм талії",
+                            data: waist,
+                            backgroundColor: [
+                                'rgba(34, 177, 36, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(22, 118, 51,1)'
+                            ],
+                            borderWidth: 1
+                        },
+                        {
+                            label: "Об'єм бедер",
+                            data: hips,
+                            backgroundColor: [
+                                'rgba(0, 0, 255, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(0, 0, 150, 1)'
+                            ],
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
                         }]
                     },
-                    options: {
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }]
-                        },
-                            legend: {
-                                position: "bottom"
-                            }
-                        }
-                    });
+                    legend: {
+                        position: "bottom"
+                    }
+                }
+            });
+        });
     </script>
 </body>
 

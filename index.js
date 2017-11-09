@@ -167,15 +167,29 @@ io.on("connection", function (socket) {
         });
     });
     socket.on("getStats", function (data) {
-        let sql = "SELECT * FROM progress WHERE progress.id_user = " + userID;
-        connection.query(sql, function (err, result) {
+        let sqlWeight = "SELECT progress.weight, progress.date FROM progress WHERE progress.id_user = " + userID;
+        connection.query(sqlWeight, function (err, result) {
             if (err) throw err;
-            io.emit("sendStats", result);
+            io.emit("sendStatsWeight", result);
+        });
+
+        let sqlVolume = "SELECT progress.breastV, progress.waistV, progress.hipsV, progress.date FROM progress WHERE progress.id_user = " + userID;
+        connection.query(sqlVolume, function (err, result) {
+            if (err) throw err;
+            io.emit("sendStatsVolume", result);
         });
     });
-    socket.on("setMetrics", function (data) {
+    socket.on("setMetricsWeight", function (data) {
         // console.log(data);
         let sql = "INSERT INTO progress (id_user, weight, date) VALUES (" + userID + ", " + data.weight + ", '" + data.date + "')";
+        connection.query(sql, function (err, result) {
+            if (err) throw err;
+            console.log("1 record inserted");
+        });
+    });
+    socket.on("setMetricsVolume", function (data) {
+        // console.log(data);
+        let sql = "INSERT INTO progress (id_user, breastV, waistV, hipsV, date) VALUES (" + userID + ", " + data.breast + ", " + data.waist + ", " + data.hips + ", '" + data.date + "')";
         connection.query(sql, function (err, result) {
             if (err) throw err;
             console.log("1 record inserted");

@@ -23,28 +23,8 @@
     </nav>
     <div class="page">
         <div class="pageInfo">
-            <a href="/statistic"><i class="fa fa-angle-left" aria-hidden="true"></i> назад</a>
-            <div class="container">
-                <div class="row">
-                    <div class="input-field col s3">
-                        <input value="" id="day" type="text" class="validate dayWeight">
-                        <label class="active" for="dayWeight">День</label>
-                    </div>
-                    <div class="input-field col s3">
-                        <input value="" id="mount" type="text" class="validate mountWeight">
-                        <label class="active" for="mountWeight">Місяць</label>
-                    </div>
-                    <div class="input-field col s3">
-                        <input value="" id="year" type="text" class="validate yearWeight">
-                        <label class="active" for="yearWeight">Рік</label>
-                    </div>
-                    <div class="input-field col s3">
-                        <input value="" id="weight" type="text" class="validate weight">
-                        <label class="active" for="weight">Вага</label>
-                    </div>
-                    <a class="waves-effect waves-light btn-large buttonWeight indigo darken-1" href="#" onclick="setMetricsWeight()">Додати результати</a>
-                </div>
-            </div>
+            <a href="/statistic">
+                <i class="fa fa-angle-left" aria-hidden="true"></i> назад</a>
             <div class="row">
                 <div class="input-field col s3">
                     <input value="" id="day" type="text" class="validate dayWeight">
@@ -62,18 +42,45 @@
                     <input value="" id="weight" type="text" class="validate weight">
                     <label class="active" for="weight">Вага</label>
                 </div>
-                <a class="waves-effect waves-light btn-large button indigo darken-1" href="#" onclick="setMetrics()">Додати результати</a>
+                <a class="waves-effect waves-light btn-large button indigo darken-1" href="#" onclick="setMetricsWeight()">Додати результати</a>
+            </div>
+            <div class="row">
+                <div class="input-field col s2">
+                    <input value="" id="day" type="text" class="validate breastV">
+                    <label class="active" for="breastV">Об'єм грудей</label>
+                </div>
+                <div class="input-field col s2">
+                    <input value="" id="mount" type="text" class="validate waistV">
+                    <label class="active" for="waistV">Об'єм талії</label>
+                </div>
+                <div class="input-field col s2">
+                    <input value="" id="year" type="text" class="validate hipsV">
+                    <label class="active" for="hipsV">Об'єм стегон</label>
+                </div>
+                <div class="input-field col s2">
+                    <input value="" id="day" type="text" class="validate dayVolume">
+                    <label class="active" for="dayVolume">День</label>
+                </div>
+                <div class="input-field col s2">
+                    <input value="" id="mount" type="text" class="validate mountVolume">
+                    <label class="active" for="mountVolume">Місяць</label>
+                </div>
+                <div class="input-field col s2">
+                    <input value="" id="year" type="text" class="validate yearVolume">
+                    <label class="active" for="yearVolume">Рік</label>
+                </div>
+                <a class="waves-effect waves-light btn-large button indigo darken-1" href="#" onclick="setMetricsVolume()">Додати результати</a>
             </div>
         </div>
-        </div>
+    </div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
         let socket = io("http://localhost:3000");
-        let date, day, mount, year, weight;
 
         function setMetricsWeight() {
+            let date, day, mount, year, weight;
             weight = document.querySelector(".weight").value;
             year = document.querySelector(".yearWeight").value;
             mount = document.querySelector(".mountWeight").value;
@@ -83,12 +90,37 @@
                 date: date,
                 weight: weight
             };
-            socket.emit("setMetrics", data);
+            socket.emit("setMetricsWeight", data);
             document.querySelector(".weight").value = "";
             document.querySelector(".yearWeight").value = "";
             document.querySelector(".mountWeight").value = "";
             document.querySelector(".dayWeight").value = "";
         };
+
+        function setMetricsVolume() {
+            let breast, waist, hips, date;
+            breast = document.querySelector(".breastV").value;
+            waist = document.querySelector(".waistV").value;
+            hips = document.querySelector(".hipsV").value;
+            
+            year = document.querySelector(".yearVolume").value;
+            mount = document.querySelector(".mountVolume").value;
+            day = document.querySelector(".dayVolume").value;
+            date = year + "-" + mount + "-" + day;
+            let data = {
+                date: date,
+                breast: breast,
+                waist: waist,
+                hips: hips
+            };
+
+            socket.emit("setMetricsVolume", data);
+            document.querySelector(".breastV").value = "";
+            document.querySelector(".waistV").value = "";
+            document.querySelector(".hipsV").value = "";
+            document.querySelector(".yearVolume").value = "";document.querySelector(".mountVolume").value = "";
+            document.querySelector(".dayVolume").value = "";
+        }
     </script>
 </body>
 
