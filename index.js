@@ -163,7 +163,7 @@ io.on("connection", function (socket) {
                     break;
             }
 
-            io.emit("getTrain", "Твоя вага: " + result[0].weight + " кг." + "<br>Твій ріст: " + result[0].height + " см." + "<br>Стать: " + sex + "<br>Вік: " + result[0].age + " років" + "<br>Рівень тренувань: " + level + "<br>Ціль: " + goal + "<br>Тренування для тебе: " + result[0].trainingdescription);
+            io.emit("getTrain", "<strong>Твоя вага:</strong> " + result[0].weight + " кг." + "<br><strong>Твій ріст:</strong> " + result[0].height + " см." + "<br><strong>Стать:</strong> " + sex + "<br><strong>Вік:</strong> " + result[0].age + " років" + "<br><strong>Рівень тренувань:</strong> " + level + "<br><strong>Ціль:</strong> " + goal + "<br><strong>Тренування для тебе:</strong> " + result[0].trainingdescription);
         });
     });
     socket.on("getStats", function (data) {

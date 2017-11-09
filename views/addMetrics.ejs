@@ -16,35 +16,55 @@
             <a href="/profile" class="brand-logo">SportTrainer</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li>
-                    <a href="/logout">Logout</a>
+                    <a href="/logout">Вийти</a>
                 </li>
             </ul>
         </div>
     </nav>
     <div class="page">
         <div class="pageInfo">
-            <a href="/statistic">go back</a>
+            <a href="/statistic"><i class="fa fa-angle-left" aria-hidden="true"></i> назад</a>
             <div class="container">
                 <div class="row">
                     <div class="input-field col s3">
-                        <input value="" id="day" type="text" class="validate day">
-                        <label class="active" for="day">Day</label>
+                        <input value="" id="day" type="text" class="validate dayWeight">
+                        <label class="active" for="dayWeight">День</label>
                     </div>
                     <div class="input-field col s3">
-                        <input value="" id="mount" type="text" class="validate mount">
-                        <label class="active" for="mount">Mounth</label>
+                        <input value="" id="mount" type="text" class="validate mountWeight">
+                        <label class="active" for="mountWeight">Місяць</label>
                     </div>
                     <div class="input-field col s3">
-                        <input value="" id="year" type="text" class="validate year">
-                        <label class="active" for="year">Year</label>
+                        <input value="" id="year" type="text" class="validate yearWeight">
+                        <label class="active" for="yearWeight">Рік</label>
                     </div>
                     <div class="input-field col s3">
                         <input value="" id="weight" type="text" class="validate weight">
-                        <label class="active" for="weight">Weight</label>
+                        <label class="active" for="weight">Вага</label>
                     </div>
-                    <a class="waves-effect waves-light btn-large button indigo darken-1" href="#" onclick="setMetrics()">Add result</a>
+                    <a class="waves-effect waves-light btn-large buttonWeight indigo darken-1" href="#" onclick="setMetricsWeight()">Додати результати</a>
                 </div>
             </div>
+            <div class="row">
+                <div class="input-field col s3">
+                    <input value="" id="day" type="text" class="validate dayWeight">
+                    <label class="active" for="dayWeight">День</label>
+                </div>
+                <div class="input-field col s3">
+                    <input value="" id="mount" type="text" class="validate mountWeight">
+                    <label class="active" for="mountWeight">Місяць</label>
+                </div>
+                <div class="input-field col s3">
+                    <input value="" id="year" type="text" class="validate yearWeight">
+                    <label class="active" for="yearWeight">Рік</label>
+                </div>
+                <div class="input-field col s3">
+                    <input value="" id="weight" type="text" class="validate weight">
+                    <label class="active" for="weight">Вага</label>
+                </div>
+                <a class="waves-effect waves-light btn-large button indigo darken-1" href="#" onclick="setMetrics()">Додати результати</a>
+            </div>
+        </div>
         </div>
     </div>
 
@@ -53,22 +73,21 @@
         let socket = io("http://localhost:3000");
         let date, day, mount, year, weight;
 
-        function setMetrics() {
+        function setMetricsWeight() {
             weight = document.querySelector(".weight").value;
-            year = document.querySelector(".year").value;
-            mount = document.querySelector(".mount").value;
-            day = document.querySelector(".day").value;
+            year = document.querySelector(".yearWeight").value;
+            mount = document.querySelector(".mountWeight").value;
+            day = document.querySelector(".dayWeight").value;
             date = year + "-" + mount + "-" + day;
             let data = {
                 date: date,
                 weight: weight
             };
-            // console.log(data);
             socket.emit("setMetrics", data);
             document.querySelector(".weight").value = "";
-            document.querySelector(".year").value = "";
-            document.querySelector(".mount").value = "";
-            document.querySelector(".day").value = "";
+            document.querySelector(".yearWeight").value = "";
+            document.querySelector(".mountWeight").value = "";
+            document.querySelector(".dayWeight").value = "";
         };
     </script>
 </body>

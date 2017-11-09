@@ -19,7 +19,7 @@
     </nav>
     <div class="login_page">
         <div class="loginButtons">
-            <center><h5>Login</h5></center>
+            <center><h5>Увійти</h5></center>
 
             <!-- show any messages that come back with authentication -->
             <% if (message.length > 0) { %>
@@ -31,29 +31,29 @@
                     <!-- LOGIN FORM -->
                     <form action="/login" method="post">
                         <div class="form-group">
-                            <label>Username</label>
+                            <label>Логін</label>
                             <input type="text" class="form-control" name="username">
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
+                            <label>Пароль</label>
                             <input type="password" class="form-control" name="password">
                         </div>
                         <div class="form-group">
                             <input type="checkbox" class="filled-in" id="filled-in-box" name="remember" checked="checked" value="yes">
-                            <label for="filled-in-box">Remember Me</label>
+                            <label for="filled-in-box">Запам'ятати мене</label>
                         </div>
                         <br>
-                        <button type="submit" id="loginBtn" class="btn btn-warning btn-lg indigo darken-1">Login
+                        <button type="submit" id="loginBtn" class="btn btn-warning btn-lg indigo darken-1">Увійти
                         </button>
                     </form>
 
                     <hr>
                     <center>
-                        <p>Need an account?
-                            <a href="/signup">Signup</a>
+                        <p>Немає акаунта?
+                            <a href="/signup">Зареєструватись</a>
                         </p>
-                        <p>Or go
-                            <a href="/">home</a>.</p>
+                        <p>Або поверніться на 
+                            <a href="/">головну</a>.</p>
                     </center>
         </div>
     </div>
