@@ -24,6 +24,12 @@ body{
     border-radius: 2px;
     margin: 25px auto 0px;
     max-width: 500px;
+
+    display: flex;
+    align-items: center;
+    align-content: center; 
+    justify-content: center; 
+    overflow: auto;  
 }
 
 .brand-logo{
@@ -31,8 +37,7 @@ body{
 }
 
 .loginButtons{
-    margin: 0px auto 0px;
-    max-width: 280px;
+    max-width: 100%;
 }
 
 #loginBtn{
@@ -64,4 +69,12 @@ body{
 
 .backButton{
     padding-bottom: 20px;
+}
+
+.userIDBloc{
+    display: none;
+}
+
+.labelBorder{
+    border-bottom: 1px solid #e3f2fd;
 }

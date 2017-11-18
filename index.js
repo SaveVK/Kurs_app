@@ -163,7 +163,11 @@ io.on("connection", function (socket) {
                     break;
             }
 
-            io.emit("getTrain", "<strong>Твоя вага:</strong> " + result[0].weight + " кг." + "<br><strong>Твій ріст:</strong> " + result[0].height + " см." + "<br><strong>Стать:</strong> " + sex + "<br><strong>Вік:</strong> " + result[0].age + " років" + "<br><strong>Рівень тренувань:</strong> " + level + "<br><strong>Ціль:</strong> " + goal + "<br><strong>Тренування для тебе:</strong> " + result[0].trainingdescription);
+            // io.emit("getTrain", "<strong>Твоя вага:</strong> " + result[0].weight + " кг." + "<br><strong>Твій ріст:</strong> " + result[0].height + " см." + "<br><strong>Стать:</strong> " + sex + "<br><strong>Вік:</strong> " + result[0].age + " років" + "<br><strong>Рівень тренувань:</strong> " + level + "<br><strong>Ціль:</strong> " + goal + "<br><strong>Тренування для тебе:</strong> " + result[0].trainingdescription);
+
+            io.emit("getTrain",            
+                "<br><center><h5>Тренування для тебе</h5></center>" + result[0].trainingdescription + "<div class='labelBorder'></div><br><center><h5>Ваша інформація</h5></center><table class='striped'><tbody><tr><td><strong>Твоя вага</strong></td><td>" + result[0].weight + "</td></tr><tr><td><strong>Твій ріст</strong></td><td>" + result[0].height + "</td></tr><tr><td><strong>Стать</strong></td><td>" + sex + "</td></tr><tr><td><strong>Вік</strong></td><td>" + result[0].age + "</td></tr><tr><td><strong>Рівень тренувань</strong></td><td>" + level + "</td></tr><tr><td><strong>Ціль</strong></td><td>" + goal + "</td></tr></tbody></table>"
+            );
         });
     });
     socket.on("getStats", function (data) {

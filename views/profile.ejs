@@ -27,15 +27,20 @@
 	</nav>
 	<div class="page">
 		<div class="pageInfo">
-			<center>
+			<center class="labelBorder">
 				<h5>Вітаємо у SportTrainer,
 					<%= user.username %>
 				</h5>
 			</center>
-			<p>
-				<strong>id</strong>:
-				<div id="userID"><%= user.id %></div>
-			</p>
+			<div class="userIDBloc">
+				<p>
+					<strong>id</strong>:
+					<div id="userID"><%= user.id %></div>
+				</p>
+			</div>
+			
+
+
 			<div class="yourTrain"></div>
 			<div>
 				<a href="/editInfo">Редагувати інформацію</a>
