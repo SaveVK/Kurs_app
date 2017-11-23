@@ -101,7 +101,9 @@ io.on("connection", function (socket) {
 
         connection.query(sqlGetTraining, function (err, result) {
             if (err) throw err;
-            io.emit("getTrainID", result);
+            // io.emit("getTrainID", result);
+            training_id = result[0].id;
+            setInfoContinion();
         });
     });
 

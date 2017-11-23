@@ -25,7 +25,7 @@
     <div class="page">
         <div class="pageInfo">
             <center>
-                <h5>Редагувати</h5>
+                <h5>Редагувати інформацію</h5>
             </center>
             <div id="userID" style="display: none;"><%= user.id %></div>
             <br>
@@ -83,8 +83,6 @@
 		let userIDData = userIDDataDoc.textContent || userIDDataDoc.innerText;
         socket.emit("getUserID", userIDData);
         
-        alert(userIDData);
-
         document.querySelector(".button").addEventListener("click", ev => {
             ev.preventDefault();
             let weightData = document.querySelector(".weight").value;
@@ -103,11 +101,11 @@
             document.location.href = "http://localhost:3000/profile";
         });
 
-        socket.on("getTrainID", function (data) {
-			let trainID = document.querySelector(".trainID");
-            trainID.innerHTML = data;
-            socket.emit("setTrainID", data);
-		});
+        // socket.on("getTrainID", function (data) {
+		// 	let trainID = document.querySelector(".trainID");
+        //     trainID.innerHTML = data;
+        //     socket.emit("setTrainID", data);
+		// });
     </script>
 </body>
 
