@@ -27,46 +27,46 @@
                 <i class="fa fa-angle-left" aria-hidden="true"></i> назад</a>
             <div class="row">
                 <div class="input-field col s3">
-                    <input value="" id="day" type="text" class="validate dayWeight">
+                    <input value="" id="day" type="text" class="validate dayWeight" maxlength="2">
                     <label class="active" for="dayWeight">День</label>
                 </div>
                 <div class="input-field col s3">
-                    <input value="" id="mount" type="text" class="validate mountWeight">
+                    <input value="" id="mount" type="text" class="validate mountWeight" maxlength="2">
                     <label class="active" for="mountWeight">Місяць</label>
                 </div>
                 <div class="input-field col s3">
-                    <input value="" id="year" type="text" class="validate yearWeight">
+                    <input value="" id="year" type="text" class="validate yearWeight" maxlength="4">
                     <label class="active" for="yearWeight">Рік</label>
                 </div>
                 <div class="input-field col s3">
-                    <input value="" id="weight" type="text" class="validate weight">
+                    <input value="" id="weight" type="text" class="validate weight" maxlength="3">
                     <label class="active" for="weight">Вага</label>
                 </div>
                 <a class="waves-effect waves-light btn-large button indigo darken-1" href="#" onclick="setMetricsWeight()">Додати результати</a>
             </div>
             <div class="row">
                 <div class="input-field col s2">
-                    <input value="" id="day" type="text" class="validate breastV">
+                    <input value="" id="day" type="text" class="validate breastV" maxlength="3">
                     <label class="active" for="breastV">Об'єм грудей</label>
                 </div>
                 <div class="input-field col s2">
-                    <input value="" id="mount" type="text" class="validate waistV">
+                    <input value="" id="mount" type="text" class="validate waistV" maxlength="3">
                     <label class="active" for="waistV">Об'єм талії</label>
                 </div>
                 <div class="input-field col s2">
-                    <input value="" id="year" type="text" class="validate hipsV">
+                    <input value="" id="year" type="text" class="validate hipsV" maxlength="3">
                     <label class="active" for="hipsV">Об'єм стегон</label>
                 </div>
                 <div class="input-field col s2">
-                    <input value="" id="day" type="text" class="validate dayVolume">
+                    <input value="" id="day" type="text" class="validate dayVolume" maxlength="2">
                     <label class="active" for="dayVolume">День</label>
                 </div>
                 <div class="input-field col s2">
-                    <input value="" id="mount" type="text" class="validate mountVolume">
+                    <input value="" id="mount" type="text" class="validate mountVolume" maxlength="2">
                     <label class="active" for="mountVolume">Місяць</label>
                 </div>
                 <div class="input-field col s2">
-                    <input value="" id="year" type="text" class="validate yearVolume">
+                    <input value="" id="year" type="text" class="validate yearVolume" maxlength="4">
                     <label class="active" for="yearVolume">Рік</label>
                 </div>
                 <a class="waves-effect waves-light btn-large button indigo darken-1" href="#" onclick="setMetricsVolume()">Додати результати</a>
@@ -85,41 +85,107 @@
             year = document.querySelector(".yearWeight").value;
             mount = document.querySelector(".mountWeight").value;
             day = document.querySelector(".dayWeight").value;
-            date = year + "-" + mount + "-" + day;
-            let data = {
-                date: date,
-                weight: weight
-            };
-            socket.emit("setMetricsWeight", data);
-            document.querySelector(".weight").value = "";
-            document.querySelector(".yearWeight").value = "";
-            document.querySelector(".mountWeight").value = "";
-            document.querySelector(".dayWeight").value = "";
+            if (checkDate(day, mount, year) == true && checkWeight(weight) == true) {
+                date = year + "-" + mount + "-" + day;
+                let data = {
+                    date: date,
+                    weight: weight
+                };
+                socket.emit("setMetricsWeight", data);
+                document.querySelector(".weight").value = "";
+                document.querySelector(".yearWeight").value = "";
+                document.querySelector(".mountWeight").value = "";
+                document.querySelector(".dayWeight").value = "";
+            }
         };
+
+        function checkDate(day, mount, year) {
+            if ((day > 0 && day <= 31 && day != "") && (mount > 0 && mount <= 12 && mount != "") && (year >= 2016 && year <= 2100 && year != "")) {
+                return true;
+            } else {
+                alert("Некоректно введена дата!");
+                return false;
+            }
+        }
+
+        function checkWeight(weight) {
+            if (weight >= 200) {
+                alert("Вага має бути менше 100 кг!");
+                return false;
+            }
+            if (weight == 0) {
+                alert("Вага не може дорівнювати 0 кг!");
+                return false;
+            }
+            if (weight <= 0) {
+                alert("Вага не може бути менше 0 кг!");
+                return false;
+            }
+
+            if (weight == "") {
+                alert("Введіть значення ваги!");
+                return false;
+            }
+            return true;
+        }
+
+        function checkVolume(breast, waist, hips) {
+            if (breast == 0) {
+                alert("Об'єм грудей не може дорівнювати 0 кг!");
+                return false;
+            }
+            if (breast == "") {
+                alert("Введіть значення об'єму грудей!");
+                return false;
+            }
+
+            if (waist == 0) {
+                alert("Об'єм талій не може дорівнювати 0 кг!");
+                return false;
+            }
+            if (waist == "") {
+                alert("Введіть значення об'єму талії!");
+                return false;
+            }
+
+            if (hips == 0) {
+                alert("Об'єм стегон не може дорівнювати 0 кг!");
+                return false;
+            }
+            if (hips == "") {
+                alert("Введіть значення об'єму стегон!");
+                return false;
+            }
+            return true;
+        }
 
         function setMetricsVolume() {
             let breast, waist, hips, date;
             breast = document.querySelector(".breastV").value;
             waist = document.querySelector(".waistV").value;
             hips = document.querySelector(".hipsV").value;
-            
+
             year = document.querySelector(".yearVolume").value;
             mount = document.querySelector(".mountVolume").value;
             day = document.querySelector(".dayVolume").value;
-            date = year + "-" + mount + "-" + day;
-            let data = {
-                date: date,
-                breast: breast,
-                waist: waist,
-                hips: hips
-            };
+            if (checkDate(day, mount, year) == true && checkVolume(breast, waist, hips) == true) {
+                date = year + "-" + mount + "-" + day;
+                let data = {
+                    date: date,
+                    breast: breast,
+                    waist: waist,
+                    hips: hips
+                };
 
-            socket.emit("setMetricsVolume", data);
-            document.querySelector(".breastV").value = "";
-            document.querySelector(".waistV").value = "";
-            document.querySelector(".hipsV").value = "";
-            document.querySelector(".yearVolume").value = "";document.querySelector(".mountVolume").value = "";
-            document.querySelector(".dayVolume").value = "";
+                socket.emit("setMetricsVolume", data);
+                document.querySelector(".breastV").value = "";
+                document.querySelector(".waistV").value = "";
+                document.querySelector(".hipsV").value = "";
+                document.querySelector(".yearVolume").value = "";
+                document.querySelector(".mountVolume").value = "";
+                document.querySelector(".dayVolume").value = "";
+            }
+
         }
     </script>
 </body>
