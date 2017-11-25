@@ -173,13 +173,13 @@ io.on("connection", function (socket) {
         });
     });
     socket.on("getStats", function (data) {
-        let sqlWeight = "SELECT progress.weight, progress.date FROM progress WHERE progress.id_user = " + userID;
+        let sqlWeight = "SELECT progress.weight, progress.date FROM progress WHERE progress.id_user = " + userID + " AND progress.weight IS NOT NULL";
         connection.query(sqlWeight, function (err, result) {
             if (err) throw err;
             io.emit("sendStatsWeight", result);
         });
 
-        let sqlVolume = "SELECT progress.breastV, progress.waistV, progress.hipsV, progress.date FROM progress WHERE progress.id_user = " + userID;
+        let sqlVolume = "SELECT progress.breastV, progress.waistV, progress.hipsV, progress.date FROM progress WHERE progress.id_user = " + userID + " AND progress.breastV IS NOT NULL";
         connection.query(sqlVolume, function (err, result) {
             if (err) throw err;
             io.emit("sendStatsVolume", result);
