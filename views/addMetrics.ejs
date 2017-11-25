@@ -27,15 +27,15 @@
                 <i class="fa fa-angle-left" aria-hidden="true"></i> назад</a>
             <div class="row">
                 <div class="input-field col s3">
-                    <input value="" id="day" type="text" class="validate dayWeight" maxlength="2">
+                    <input value="" id="dayWeight" type="text" class="validate dayWeight" maxlength="2">
                     <label class="active" for="dayWeight">День</label>
                 </div>
                 <div class="input-field col s3">
-                    <input value="" id="mount" type="text" class="validate mountWeight" maxlength="2">
+                    <input value="" id="mountWeight" type="text" class="validate mountWeight" maxlength="2">
                     <label class="active" for="mountWeight">Місяць</label>
                 </div>
                 <div class="input-field col s3">
-                    <input value="" id="year" type="text" class="validate yearWeight" maxlength="4">
+                    <input value="" id="yearWeight" type="text" class="validate yearWeight" maxlength="4">
                     <label class="active" for="yearWeight">Рік</label>
                 </div>
                 <div class="input-field col s3">
@@ -46,27 +46,27 @@
             </div>
             <div class="row">
                 <div class="input-field col s2">
-                    <input value="" id="day" type="text" class="validate breastV" maxlength="3">
+                    <input value="" id="breastV" type="text" class="validate breastV" maxlength="3">
                     <label class="active" for="breastV">Об'єм грудей</label>
                 </div>
                 <div class="input-field col s2">
-                    <input value="" id="mount" type="text" class="validate waistV" maxlength="3">
+                    <input value="" id="waistV" type="text" class="validate waistV" maxlength="3">
                     <label class="active" for="waistV">Об'єм талії</label>
                 </div>
                 <div class="input-field col s2">
-                    <input value="" id="year" type="text" class="validate hipsV" maxlength="3">
+                    <input value="" id="hipsV" type="text" class="validate hipsV" maxlength="3">
                     <label class="active" for="hipsV">Об'єм стегон</label>
                 </div>
                 <div class="input-field col s2">
-                    <input value="" id="day" type="text" class="validate dayVolume" maxlength="2">
+                    <input value="" id="dayVolume" type="text" class="validate dayVolume" maxlength="2">
                     <label class="active" for="dayVolume">День</label>
                 </div>
                 <div class="input-field col s2">
-                    <input value="" id="mount" type="text" class="validate mountVolume" maxlength="2">
+                    <input value="" id="mountVolume" type="text" class="validate mountVolume" maxlength="2">
                     <label class="active" for="mountVolume">Місяць</label>
                 </div>
                 <div class="input-field col s2">
-                    <input value="" id="year" type="text" class="validate yearVolume" maxlength="4">
+                    <input value="" id="yearVolume" type="text" class="validate yearVolume" maxlength="4">
                     <label class="active" for="yearVolume">Рік</label>
                 </div>
                 <a class="waves-effect waves-light btn-large button indigo darken-1" href="#" onclick="setMetricsVolume()">Додати результати</a>
@@ -186,6 +186,58 @@
                 document.querySelector(".dayVolume").value = "";
             }
 
+        }
+
+        document.getElementById("weight").onkeydown = function (e) {
+            return checkNumber(e);
+        }
+
+        document.getElementById("dayWeight").onkeydown = function (e) {
+            return checkNumber(e);
+        }
+
+        document.getElementById("mountWeight").onkeydown = function (e) {
+            return checkNumber(e);
+        }
+        document.getElementById("yearWeight").onkeydown = function (e) {
+            return checkNumber(e);
+        }
+        document.getElementById("breastV").onkeydown = function (e) {
+            return checkNumber(e);
+        }
+        document.getElementById("waistV").onkeydown = function (e) {
+            return checkNumber(e);
+        }
+        document.getElementById("hipsV").onkeydown = function (e) {
+            return checkNumber(e);
+        }
+        document.getElementById("dayVolume").onkeydown = function (e) {
+            return checkNumber(e);
+        }
+        document.getElementById("mountVolume").onkeydown = function (e) {
+            return checkNumber(e);
+        }
+        document.getElementById("yearVolume").onkeydown = function (e) {
+            return checkNumber(e);
+        }
+        
+        function checkNumber(e) {
+            if ((e.which >= 48 && e.which <= 57) // цифры
+                ||
+                (e.which >= 96 && e.which <= 105) // num lock
+                ||
+                e.which == 8 // backspace
+                ||
+                (e.which >= 37 && e.which <= 40) // стрелки
+                ||
+                e.which == 46
+                ||
+                e.which == 9) // tab 
+            {
+                return true;
+            } else {
+                return false;
+            }
         }
     </script>
 </body>

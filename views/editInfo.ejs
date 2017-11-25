@@ -111,40 +111,18 @@
 
         // перевірка на числа
         document.getElementById("numberW").onkeydown = function (e) {
-            if ((e.which >= 48 && e.which <= 57) // цифры
-                ||
-                (e.which >= 96 && e.which <= 105) // num lock
-                ||
-                e.which == 8 // backspace
-                ||
-                (e.which >= 37 && e.which <= 40) // стрелки
-                ||
-                e.which == 46) // delete 
-            {
-                return true;
-            } else {
-                return false;
-            }
+            return checkNumber(e);
         }
 
         document.getElementById("numberA").onkeydown = function (e) {
-            if ((e.which >= 48 && e.which <= 57) // цифры
-                ||
-                (e.which >= 96 && e.which <= 105) // num lock
-                ||
-                e.which == 8 // backspace
-                ||
-                (e.which >= 37 && e.which <= 40) // стрелки
-                ||
-                e.which == 46) // delete 
-            {
-                return true;
-            } else {
-                return false;
-            }
+            return checkNumber(e);
         }
 
         document.getElementById("numberH").onkeydown = function (e) {
+            return checkNumber(e);
+        }
+
+        function checkNumber(e) {
             if ((e.which >= 48 && e.which <= 57) // цифры
                 ||
                 (e.which >= 96 && e.which <= 105) // num lock
@@ -153,7 +131,9 @@
                 ||
                 (e.which >= 37 && e.which <= 40) // стрелки
                 ||
-                e.which == 46) // delete 
+                e.which == 46
+                ||
+                e.which == 9) // tab 
             {
                 return true;
             } else {
