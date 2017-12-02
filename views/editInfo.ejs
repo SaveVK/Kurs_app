@@ -149,8 +149,8 @@
             let levelData = document.querySelector(".level").value;
             let goalData = document.querySelector(".goal").value;
             
-            if (weightData >= 200) {
-                alert("Вага має бути менше 100 кг!");
+            if (weightData > 200) {
+                alert("Вага має бути менше 200 кг!");
                 return false;
             } 
             if (weightData == 0) {
