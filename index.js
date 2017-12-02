@@ -97,7 +97,9 @@ io.on("connection", function (socket) {
     });
     socket.on("setInfo", function () {
         // training_id + username replace
-        let sqlGetTraining = "SELECT training.id FROM training WHERE weightCategory = " + weight + " AND height = " + height + " AND sex = '" + sex + "' AND age = " + age + " AND level = '" + level + "' AND goal = '" + goal + "'";
+        let sqlGetTraining = "SELECT training.id FROM training WHERE weightCategory = " + changeWeightCategory(weight) + " AND sex = '" + sex + "'";
+
+        // let sqlGetTraining = "SELECT training.id FROM training WHERE weightCategory = " + weight + " AND height = " + height + " AND sex = '" + sex + "' AND age = " + age + " AND level = '" + level + "' AND goal = '" + goal + "'";
 
         connection.query(sqlGetTraining, function (err, result) {
             if (err) throw err;
@@ -106,6 +108,32 @@ io.on("connection", function (socket) {
             setInfoContinion();
         });
     });
+
+    function changeWeightCategory(weight) {
+        let weightCategory;
+        if (weight >= 26 && weight <= 50) {
+            weightCategory = 1;
+        }
+        if (weight > 50 && weight <= 75) {
+            weightCategory = 2;
+        }
+        if (weight > 75 && weight <= 100) {
+            weightCategory = 3;
+        }
+        if (weight > 100 && weight <= 125) {
+            weightCategory = 4;
+        }
+        if (weight > 125 && weight <= 150) {
+            weightCategory = 5;
+        }
+        if (weight > 150 && weight <= 175) {
+            weightCategory = 6;
+        }
+        if (weight > 175 && weight <= 200) {
+            weightCategory = 7;
+        }
+        return weightCategory;
+    };
 
     function setInfoContinion() {
         let sql = "UPDATE users SET weight = '" + weight + "', height = '" + height + "', sex = '" + sex + "', age = " + age + ", level = '" + level + "', goal = '" + goal + "', training_id = " + training_id + " WHERE id = " + userID;
