@@ -97,7 +97,7 @@ io.on("connection", function (socket) {
     });
     socket.on("setInfo", function () {
         // training_id + username replace
-        let sqlGetTraining = "SELECT training.id FROM training WHERE weight = " + weight + " AND height = " + height + " AND sex = '" + sex + "' AND age = " + age + " AND level = '" + level + "' AND goal = '" + goal + "'";
+        let sqlGetTraining = "SELECT training.id FROM training WHERE weightCategory = " + weight + " AND height = " + height + " AND sex = '" + sex + "' AND age = " + age + " AND level = '" + level + "' AND goal = '" + goal + "'";
 
         connection.query(sqlGetTraining, function (err, result) {
             if (err) throw err;
